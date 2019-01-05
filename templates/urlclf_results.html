@@ -1,0 +1,67 @@
+<!doctype html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Soi Tin - hỗ trợ nhận dạng tin giả</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/fnd-logo.png') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="soi-tin-background">
+  <div class="cover-container text-center d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="py-2">
+      <!-- <img class="mb-1" src="{{ url_for('static', filename='img/soi-tin-logo.png') }}" alt="Soi-Tin Logo" width="200" height="200"> -->
+      <h1 class="soi-tin-title">Kết quả phân loại tin tức báo chí theo URL</h1>
+    </div>
+
+    <div class="row soi-tin-text align-items-center ">
+      <p><strong>Một số kết quả phân loại được gợi ý cho tin tức theo link:</strong></p>
+      <br>
+      <p><span> {{ text[:200] }}[...] </span></p>
+      <ul class="list-group" style="width: 100%;">
+        {% for result in result_list %}
+        <li class="list-group-item list-group-flush active" style="background-color: #005b96;">
+          <p>Theo kết quả mô hình {{ result['name'] }}, đoạn trên là:
+            <strong>{% if result['label'] == '1'%}
+            Tin Giả
+            {% else %}
+            Tin Thật
+            {% endif %}
+            </strong>
+          </p>
+        </li>
+        <!-- Tỉ lệ giả thật -->
+        <li class="list-group-item">
+          <div class="progress">
+            <div class="progress-bar bg-success" style="width:{{ result['proba'][0]*100 }}%">
+              Tin thật: {{ '%0.2f' | format(result['proba'][0]*100) }}
+            </div>
+
+            <div class="progress-bar bg-danger" style="width:{{ result['proba'][1]*100 }}%">
+              Tin giả: {{ '%0.2f' | format(result['proba'][1]*100) }}
+            </div>
+        </li>
+
+        <li class="list-group-item" style="color: #007bff;">
+          <strong>Một số từ khóa ảnh hưởng đến phân loại:</strong> <br> {{ '; '.join(result['keywords']) }} 
+        </li>
+        <!-- {% for key, value in result.items() %} 
+            <p>{{ key }}: </p> 
+            <p>{{ value }}</p>
+          {% endfor %} -->
+        {% endfor %}
+      </ul>
+
+
+      <!-- FORM GÓP Ý USER -->
+    </div>
+    <!-- <p class="footer mt-5" style="color:white;"><strong>FND Team - 2018: Pham Minh Ninh & Ho Quang Thanh</strong></p> -->
+  </div>
+
+</body>
