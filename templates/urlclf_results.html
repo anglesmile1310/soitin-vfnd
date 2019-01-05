@@ -18,21 +18,32 @@
     <div class="py-2">
       <!-- <img class="mb-1" src="{{ url_for('static', filename='img/soi-tin-logo.png') }}" alt="Soi-Tin Logo" width="200" height="200"> -->
       <h1 class="soi-tin-title">Kết quả phân loại tin tức báo chí theo URL</h1>
+      <a href="{{ url_for('index') }}" style="color: white;"> Trang chủ </a>
     </div>
 
     <div class="row soi-tin-text align-items-center ">
-      <p><strong>Một số kết quả phân loại được gợi ý cho tin tức theo link:</strong></p>
-      <br>
-      <p><span> {{ text[:200] }}[...] </span></p>
+      <p style="text-align: left;"><strong>Một số kết quả phân loại được gợi ý cho tin tức theo link:</strong>
+        <br>
+        <span> {{ url[:150] }}[...] </span>
+        <br>
+        <strong>Tiêu đề: </strong> {{ result['title'] }}
+        <br>
+        <strong>Ngày xuất bản: </strong>{{ result['time'] }}
+        <br>
+        <strong>Trang tin: </strong>{{result['domain']}}
+        <br>
+        <strong>Tác giả: </strong> {{', '.join(result['author'])}}
+        <br>
+      </p>
       <ul class="list-group" style="width: 100%;">
         {% for result in result_list %}
         <li class="list-group-item list-group-flush active" style="background-color: #005b96;">
           <p>Theo kết quả mô hình {{ result['name'] }}, đoạn trên là:
             <strong>{% if result['label'] == '1'%}
-            Tin Giả
-            {% else %}
-            Tin Thật
-            {% endif %}
+              Tin Giả
+              {% else %}
+              Tin Thật
+              {% endif %}
             </strong>
           </p>
         </li>
@@ -49,7 +60,7 @@
         </li>
 
         <li class="list-group-item" style="color: #007bff;">
-          <strong>Một số từ khóa ảnh hưởng đến phân loại:</strong> <br> {{ '; '.join(result['keywords']) }} 
+          <strong>Một số từ khóa ảnh hưởng đến phân loại:</strong> <br> {{ '; '.join(result['keywords']) }}
         </li>
         <!-- {% for key, value in result.items() %} 
             <p>{{ key }}: </p> 

@@ -12,3 +12,4 @@ python-openid
 MarkupSafe
 itsdangerous
 click
+newsplease

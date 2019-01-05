@@ -58,7 +58,7 @@ def text_clf_model(text):
   
   text_clf_result['results'] = [predict_text(model, preproc_text) for model in models]
 
-  
+  print(text_clf_result)
   return text_clf_result
 
 

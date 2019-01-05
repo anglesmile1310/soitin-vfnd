@@ -18,10 +18,11 @@
     <div class="py-2">
       <!-- <img class="mb-1" src="{{ url_for('static', filename='img/soi-tin-logo.png') }}" alt="Soi-Tin Logo" width="200" height="200"> -->
       <h1 class="soi-tin-title">Kết quả phân loại</h1>
+      <a href="{{ url_for('index') }}" style="color: white;"> Trang chủ </a>
     </div>
 
     <div class="row soi-tin-text align-items-center ">
-      <p><strong>Một số kết quả phân loại được gợi ý cho văn bản:</strong></p>
+      <p><strong>Một số kết quả phân loại được gợi ý cho văn bản: </strong></p>
       <br>
       <p><span> {{ text[:200] }}[...] </span></p>
       <ul class="list-group" style="width: 100%;">

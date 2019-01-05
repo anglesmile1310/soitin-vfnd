@@ -9,6 +9,7 @@ from text_utils import isNewsURL
 from text_preprocessing import text_preprocessing
 # models
 from text_model import text_clf_model
+from url_model import url_clf_model
 
 #Server
 app = Flask(__name__)
@@ -52,8 +53,11 @@ def urlclf():
     if(not isNewsURL(url)):
       error = "Bạn chưa nhập đúng định dạng URL, vui lòng nhập lại"
       return render_template('urlclf.html', error = error)
-    
-    
+    try:
+      urlclf = url_clf_model(url)
+      return render_template('urlclf_results.html', result_list = urlclf['results'], url = urlclf['url'], result = urlclf)
+    except Exception as e:
+      return render_template('urlclf.html', error = e)
     # redirect to end the POST handling
     # the redirect can be to the same route or somewhere else
     # return redirect(url_for('textclf-results'))
@@ -76,3 +80,7 @@ def show_post(post_id):
 def show_subpath(subpath):
     # show the subpath after /path/
     return 'Subpath %s' % subpath
+
+
+if __name__ == '__main__':
+   app.run(debug = True)
